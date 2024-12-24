@@ -5,4 +5,4 @@ bases:
   - ./../base
 images:
   - name: deepinnext/email-service
-    newTag: c016506d8bb50395d82ab9201990e32b77b8cdb8
+    newTag: 4d72f93ef419bad5d7b0ab2151df6cc51240893d
