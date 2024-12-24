@@ -3,15 +3,4 @@ kind: Deployment
 metadata:
   name: email-service
 spec:
-  replicas: 3
-  template:
-    spec:
-      containers:
-        - name: email-service
-          resources:
-            requests:
-              memory: "1024Mi"
-              cpu: "1"
-            limits:
-              memory: "2048Mi"
-              cpu: "2"
+  replicas: 2

@@ -6,7 +6,16 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: gateway.deepin.me.local
+    - http:
+        paths:
+        - path: /email
+          pathType: Prefix
+          backend:
+            service:
+              name: email-service
+              port:
+                number: 5000
+    - host: "<<PLACEHOLDER>>"
       http:
         paths:
         - path: /
