@@ -1,4 +1,4 @@
-name: Auto create or update ArgoCD Application
+name: Sync ArgoCD Application
 
 on:
   push:
