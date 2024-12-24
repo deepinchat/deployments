@@ -1,6 +1,6 @@
-namePrefix: staging-
+namePrefix: nas-
 commonLabels:
-  variant: staging
+  variant: nas
 bases:
   - ./../base
 images:

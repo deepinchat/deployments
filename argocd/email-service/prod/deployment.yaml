@@ -10,4 +10,4 @@ spec:
       - name: email-service
         env:
         - name: DEEPIN_ENV
-          value: production
+          value: prod
