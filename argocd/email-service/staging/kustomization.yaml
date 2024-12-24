@@ -1,0 +1,8 @@
+namePrefix: staging-
+commonLabels:
+  variant: staging
+bases:
+  - ./../base
+images:
+  - name: deepinnext/email-service
+    newTag: latest

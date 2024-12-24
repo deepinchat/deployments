@@ -1,0 +1,11 @@
+namePrefix: production-
+commonLabels:
+  variant: production
+bases:
+  - ./../base
+patchesStrategicMerge:
+  - deployment.yaml
+images:
+  - name: deepinnext/email-service
+    newTag: latest
+    
