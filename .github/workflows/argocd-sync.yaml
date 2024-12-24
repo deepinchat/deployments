@@ -33,7 +33,8 @@ jobs:
           SERVICE_REPO="${{ github.server_url }}/${{ github.repository_owner }}/$SERVICE.git"
           echo "Processing service: $SERVICE in repo: $SERVICE_REPO"
 
-          for ENV in production staging; do
+          # for ENV in prod nas; do
+          for ENV in nas; do
             if [[ -d "$SERVICE_DIR/$ENV" ]]; then
               APP_NAME="$SERVICE-$ENV"
               echo "Ensuring $APP_NAME app exists for $ENV environment"
@@ -50,13 +51,11 @@ jobs:
                   --self-heal
                   
                 echo "$APP_NAME application created successfully"
+                echo "Syncing $APP_NAME application..."
+                argocd app sync "$APP_NAME"
               else
                 echo "$APP_NAME application already exists"
               fi
-              
-              echo "Syncing $APP_NAME application..."
-              argocd app sync "$APP_NAME"
-              sleep 10
             fi
           done
           done
