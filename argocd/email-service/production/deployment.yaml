@@ -4,3 +4,10 @@ metadata:
   name: email-service
 spec:
   replicas: 2
+  template:
+    spec:
+      containers:
+      - name: email-service
+        env:
+        - name: DEEPIN_ENV
+          value: production
