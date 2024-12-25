@@ -37,13 +37,13 @@ spec:
                   name: identity-service-secret
                   key: CERT_PASSWORD
             - name: CERT_PATH
-              value: /app/deepin.pfx
+              value: /app/certs/deepin.pfx
           volumeMounts:
             - name: pfx-certs
-              mountPath: /app/deepin.pfx
-              subPath: deepin.pfx
+              mountPath: /app/certs
+              readOnly: true
       volumes:
         - name: pfx-certs
           hostPath:
-            path: /home/leoyang/certs/deepin.pfx
-            type: File
+            path: /home/leoyang/certs
+            type: Directory
