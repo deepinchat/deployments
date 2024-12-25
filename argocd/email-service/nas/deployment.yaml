@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: email-service
 spec:
+  replicas: 2
   template:
     spec:
       containers:
