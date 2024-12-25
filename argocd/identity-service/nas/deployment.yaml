@@ -45,5 +45,5 @@ spec:
       volumes:
         - name: pfx-certs
           hostPath:
-            path: /home/leoyang/deepin.pfx
+            path: /home/leoyang/certs/deepin.pfx
             type: File
