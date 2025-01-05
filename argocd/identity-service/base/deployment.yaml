@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: identity-service
-          image: deepinnext/identity-service:47f0eed7f9a1c51a2e8af744a10e2f9a02e45503
+          image: deepinnext/identity-service:153cd0661a7e6a7ca6877d7baef9c6b1abfbcea2
           ports:
             - containerPort: 5000
           resources:
