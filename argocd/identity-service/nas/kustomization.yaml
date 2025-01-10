@@ -7,7 +7,7 @@ patchesStrategicMerge:
   - deployment.yaml
 images:
   - name: deepinnext/identity-service
-    newTag: 153cd0661a7e6a7ca6877d7baef9c6b1abfbcea2
+    newTag: e2e5c06d199d0d2e8ab7abbe125726e3bbc980fa
 patches:
   - path: patch-ingress.yaml
     target:
