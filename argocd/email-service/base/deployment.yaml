@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: email-service
-          image: deepinnext/email-service:a03f766c38d2da664d30b3ac4e72b0d1beee51df
+          image: deepinnext/email-service:e2cc98022838df8e58e686765890fae072dadd60
           ports:
             - containerPort: 5000
           resources:
