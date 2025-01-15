@@ -38,6 +38,33 @@ spec:
                   key: CERT_PASSWORD
             - name: CERT_PATH
               value: /app/certs/deepin.pfx
+            - name: RabbitMQ__Host
+              valueFrom:
+                secretKeyRef:
+                  name: identity-service-secret
+                  key: RABBITMQ_HOST
+            - name: RabbitMQ__Port
+              valueFrom:
+                secretKeyRef:
+                  name: identity-service-secret
+                  key: RABBITMQ_PORT
+            - name: RabbitMQ__Username
+              valueFrom:
+                secretKeyRef:
+                  name: identity-service-secret
+                  key: RABBITMQ_USERNAME
+            - name: RabbitMQ__Password
+              valueFrom:
+                secretKeyRef:
+                  name: identity-service-secret
+                  key: RABBITMQ_PASSWORD
+            - name: RabbitMQ__VirtualHost
+              valueFrom:
+                secretKeyRef:
+                  name: identity-service-secret
+                  key: RABBITMQ_VHOST
+            - name: RabbitMQ__QueueName
+              value: identity-service
           volumeMounts:
             - name: pfx-certs
               mountPath: /app/certs
