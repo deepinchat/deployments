@@ -43,3 +43,33 @@ spec:
                   key: RABBITMQ_VHOST
             - name: RabbitMQ__QueueName
               value: email-service
+            - name: Smtp__Host
+              valueFrom:
+                secretKeyRef:
+                  name: email-service-secret
+                  key: SMTP_HOST
+            - name: Smtp__Port
+              valueFrom:
+                secretKeyRef:
+                  name: email-service-secret
+                  key: SMTP_PORT
+            - name: Smtp__FromAddress
+              valueFrom:
+                secretKeyRef:
+                  name: email-service-secret
+                  key: SMTP_FROM_ADDRESS
+            - name: Smtp__FromDisplayName
+              valueFrom:
+                secretKeyRef:
+                  name: email-service-secret
+                  key: SMTP_FROM_DISPLAY_NAME
+            - name: Smtp__ReplyTo
+              valueFrom:
+                secretKeyRef:
+                  name: email-service-secret
+                  key: SMTP_REPLY_TO
+            - name: Smtp__Password
+              valueFrom:
+                secretKeyRef:
+                  name: email-service-secret
+                  key: SMTP_PASSWORD
