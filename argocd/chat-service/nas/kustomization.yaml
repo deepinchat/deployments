@@ -1,0 +1,15 @@
+namePrefix: nas-
+commonLabels:
+  variant: nas
+bases:
+  - ./../base
+patchesStrategicMerge:
+  - deployment.yaml
+images:
+  - name: deepinnext/chat-service
+    newTag: e2cc98022838df8e58e686765890fae072dadd60
+patches:
+  - path: patch-ingress.yaml
+    target:
+      kind: Ingress
+      name: chat-service

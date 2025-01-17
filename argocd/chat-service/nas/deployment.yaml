@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-service
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: chat-service
+          env:
+            - name: DEEPIN_ENV
+              value: nas
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: chat-service-secret
+                  key: DEFAULT_CONNECTION
+            - name: ConnectionStrings__Redis
+              valueFrom:
+                secretKeyRef:
+                  name: chat-service-secret
+                  key: REDIS_CONNECTION
+            - name: RabbitMQ__Host
+              valueFrom:
+                secretKeyRef:
+                  name: chat-service-secret
+                  key: RABBITMQ_HOST
+            - name: RabbitMQ__Port
+              valueFrom:
+                secretKeyRef:
+                  name: chat-service-secret
+                  key: RABBITMQ_PORT
+            - name: RabbitMQ__Username
+              valueFrom:
+                secretKeyRef:
+                  name: chat-service-secret
+                  key: RABBITMQ_USERNAME
+            - name: RabbitMQ__Password
+              valueFrom:
+                secretKeyRef:
+                  name: chat-service-secret
+                  key: RABBITMQ_PASSWORD
+            - name: RabbitMQ__VirtualHost
+              valueFrom:
+                secretKeyRef:
+                  name: chat-service-secret
+                  key: RABBITMQ_VHOST
+            - name: RabbitMQ__QueueName
+              value: chat-service
+            - name: Identity__Url
+              value: https://account.deepin.me
