@@ -10,7 +10,7 @@ spec:
         - name: chat-service
           env:
             - name: PathBase
-              value: chat
+              value: /chat
             - name: DEEPIN_ENV
               value: nas
             - name: ConnectionStrings__DefaultConnection

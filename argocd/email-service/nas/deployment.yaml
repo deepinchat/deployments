@@ -10,7 +10,7 @@ spec:
         - name: email-service
           env:
             - name: PathBase
-              value: email
+              value: /email
             - name: DEEPIN_ENV
               value: nas
             - name: ConnectionStrings__DefaultConnection

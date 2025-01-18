@@ -10,7 +10,7 @@ spec:
         - name: message-service
           env:
             - name: PathBase
-              value: message
+              value: /message
             - name: DEEPIN_ENV
               value: nas
             - name: ConnectionStrings__DefaultConnection
