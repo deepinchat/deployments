@@ -20,3 +20,15 @@ spec:
                   key: DEFAULT_CONNECTION
             - name: Identity__Url
               value: https://account.deepin.me
+            - name: Storage__Provider
+              value: Local
+            - name: Storage__Root
+              value: /app/data
+          volumeMounts:
+            - name: app-data
+              mountPath: /app/data
+      volumes:
+        - name: app-data
+          hostPath:
+            path: /home/leoyang/deepin/data
+            type: Directory
