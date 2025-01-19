@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storage-service
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: storage-service
+          env:
+            - name: PathBase
+              value: /storage
+            - name: DEEPIN_ENV
+              value: nas
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: storage-service-secret
+                  key: DEFAULT_CONNECTION
+            - name: Identity__Url
+              value: https://account.deepin.me

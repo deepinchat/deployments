@@ -1,0 +1,15 @@
+namePrefix: nas-
+commonLabels:
+  variant: nas
+bases:
+  - ./../base
+patchesStrategicMerge:
+  - deployment.yaml
+images:
+  - name: deepinnext/storage-service
+    newTag: 2ce003174ae602ca36b53a810e0fc959563a9665
+patches:
+  - path: patch-ingress.yaml
+    target:
+      kind: Ingress
+      name: storage-service
