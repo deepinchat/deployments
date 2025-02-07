@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: presence-service
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: presence-service
+          env:
+            - name: PathBase
+              value: /presence
+            - name: DEEPIN_ENV
+              value: nas
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: presence-service-secret
+                  key: DEFAULT_CONNECTION
+            - name: ConnectionStrings__RedisConnection
+              valueFrom:
+                secretKeyRef:
+                  name: presence-service-secret
+                  key: REDIS_CONNECTION
+            - name: Identity__Url
+              value: https://account.deepin.me

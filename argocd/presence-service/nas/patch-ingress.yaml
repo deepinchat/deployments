@@ -1,0 +1,3 @@
+- op: replace
+  path: /spec/rules/1/host
+  value: presence-nas.internal.local
