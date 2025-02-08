@@ -7,7 +7,7 @@ patchesStrategicMerge:
   - deployment.yaml
 images:
   - name: deepinnext/presence-service
-    newTag: a2e5f5521ab13a009bdd70853ce733cbeeb0d3aa
+    newTag: cf627d7f88de01d9d2d8a3ddb36df3f2f0933314
 patches:
   - path: patch-ingress.yaml
     target:
