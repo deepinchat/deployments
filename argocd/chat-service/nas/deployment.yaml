@@ -18,7 +18,7 @@ spec:
                 secretKeyRef:
                   name: chat-service-secret
                   key: DEFAULT_CONNECTION
-            - name: ConnectionStrings__Redis
+            - name: ConnectionStrings__RedisConnection
               valueFrom:
                 secretKeyRef:
                   name: chat-service-secret
