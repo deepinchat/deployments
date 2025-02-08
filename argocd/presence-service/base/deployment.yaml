@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: presence-service
-          image: deepinnext/presence-service:a2e5f5521ab13a009bdd70853ce733cbeeb0d3aa
+          image: deepinnext/presence-service:cf627d7f88de01d9d2d8a3ddb36df3f2f0933314
           ports:
             - containerPort: 5000
           resources:
