@@ -10,11 +10,11 @@ spec:
         - name: identity-service
           env:
             - name: ASPNETCORE_URLS
-              value: "http://*:80;http://*:8080;https://+:443;https://+:8081"
+              value: "http://*:80;https://+:443"
             - name: ASPNETCORE_HTTPS_PORTS
-              value: "443;8081"
+              value: "443"
             - name: ASPNETCORE_HTTP_PORTS
-              value: "80;8080"
+              value: "80"
             - name: ASPNETCORE_Kestrel__Certificates__Default__Path
               value: "/app/certs/origin-cert-cf.pem"
             - name: ASPNETCORE_Kestrel__Certificates__Default__KeyPath
