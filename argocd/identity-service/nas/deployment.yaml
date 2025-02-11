@@ -18,7 +18,7 @@ spec:
             - name: ASPNETCORE_Kestrel__Certificates__Default__Path
               value: "/app/certs/origin-cert-cf.pem"
             - name: ASPNETCORE_Kestrel__Certificates__Default__KeyPath
-              value: "/app/certs/dprivate-key-cf.pem"
+              value: "/app/certs/private-key-cf.pem"
             - name: DEEPIN_ENV
               value: nas
             - name: ConnectionStrings__IdentityDb
