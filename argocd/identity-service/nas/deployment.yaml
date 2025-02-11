@@ -9,6 +9,16 @@ spec:
       containers:
         - name: identity-service
           env:
+            - name: ASPNETCORE_URLS
+              value: "http://*:80;http://*:8080;https://+:443;https://+:8081"
+            - name: ASPNETCORE_HTTPS_PORTS
+              value: "443;8081"
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "80;8080"
+            - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+              value: "/app/certs/origin-cert-cf.pem"
+            - name: ASPNETCORE_Kestrel__Certificates__Default__KeyPath
+              value: "/app/certs/dprivate-key-cf.pem"
             - name: DEEPIN_ENV
               value: nas
             - name: ConnectionStrings__IdentityDb
@@ -66,11 +76,11 @@ spec:
             - name: RabbitMQ__QueueName
               value: identity-service
           volumeMounts:
-            - name: pfx-certs
+            - name: certs
               mountPath: /app/certs
               readOnly: true
       volumes:
-        - name: pfx-certs
+        - name: certs
           hostPath:
             path: /home/leoyang/certs
             type: Directory

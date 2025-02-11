@@ -6,16 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - http:
-        paths:
-        - path: /identity
-          pathType: Prefix
-          backend:
-            service:
-              name: identity-service
-              port:
-                number: 5000
-    - host: "<<PLACEHOLDER>>"
+    - host: account.deepin.internal
       http:
         paths:
         - path: /
@@ -24,4 +15,4 @@ spec:
             service:
               name: identity-service
               port:
-                number: 5000
+                number: 5443
