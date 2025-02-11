@@ -1,3 +1,3 @@
 - op: replace
-  path: /spec/rules/1/host
+  path: /spec/rules/0/host
   value: identity-nas.internal.local
