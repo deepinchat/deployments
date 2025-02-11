@@ -18,8 +18,8 @@ spec:
         - name: identity-service
           image: deepinnext/identity-service:2b06da6994e8cd1dec58561efc6b051fb6581a40
           ports:
-            - containerPort: 80
-            - containerPort: 443
+            - containerPort: 8080
+            - containerPort: 8081
           resources:
             requests:
               memory: "256Mi"
@@ -30,12 +30,12 @@ spec:
           readinessProbe:
             httpGet:
               path: /health
-              port: 80
+              port: 8080
             initialDelaySeconds: 5
             periodSeconds: 5
           livenessProbe:
             httpGet:
               path: /health
-              port: 80
+              port: 8080
             initialDelaySeconds: 5
             periodSeconds: 5

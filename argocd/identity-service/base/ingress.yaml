@@ -15,4 +15,4 @@ spec:
             service:
               name: identity-service
               port:
-                number: 5443
+                number: 5000
