@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: chat-service
-          image: deepinnext/chat-service:224e4df8c3f00bd02a577f05beddf4fbba33f787
+          image: deepinnext/chat-service:a2925eff7943f7b161934b37a88c97f9cc1e124c
           ports:
             - containerPort: 5000
           resources:
