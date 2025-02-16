@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: message-service
-          image: deepinnext/message-service:6e1178782159228bf80924391c118488b0bcee0b
+          image: deepinnext/message-service:fa10ec8a52fd4f98386b5a30ff49c945350315c0
           ports:
             - containerPort: 5000
           resources:
