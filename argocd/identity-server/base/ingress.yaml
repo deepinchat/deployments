@@ -1,20 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: identity-service
+  name: identity-server
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - http:
-        paths:
-        - path: /identity
-          pathType: Prefix
-          backend:
-            service:
-              name: chat-service
-              port:
-                number: 5006
     - host: "<<PLACEHOLDER>>"
       http:
         paths:
@@ -22,6 +13,6 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: identity-service
+              name: identity-server
               port:
-                number: 5006
+                number: 5000

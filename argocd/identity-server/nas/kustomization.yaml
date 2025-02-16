@@ -1,0 +1,15 @@
+namePrefix: nas-
+commonLabels:
+  variant: nas
+bases:
+  - ./../base
+patchesStrategicMerge:
+  - deployment.yaml
+images:
+  - name: deepinnext/identity-server
+    newTag: 87073d4b658ced2209aadfaf8631f45ec508fdd3
+patches:
+  - path: patch-ingress.yaml
+    target:
+      kind: Ingress
+      name: identity-server

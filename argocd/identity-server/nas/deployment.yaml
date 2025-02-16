@@ -1,60 +1,82 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: identity-service
+  name: identity-server
 spec:
-  replicas: 1
+  replicas: 2
   template:
     spec:
       containers:
-        - name: identity-service
+        - name: identity-server
           env:
+            - name: ASPNETCORE_URLS
+              value: "http://*:8080;https://+:8081"
+            - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+              value: "/app/certs/origin-cert-cf.pem"
+            - name: ASPNETCORE_Kestrel__Certificates__Default__KeyPath
+              value: "/app/certs/private-key-cf.pem"
             - name: DEEPIN_ENV
               value: nas
             - name: ConnectionStrings__IdentityDb
               valueFrom:
                 secretKeyRef:
-                  name: identity-service-secret
+                  name: identity-server-secret
                   key: IDENTITY_DB_CONNECTION
             - name: ConnectionStrings__ConfigurationDb
               valueFrom:
                 secretKeyRef:
-                  name: identity-service-secret
+                  name: identity-server-secret
                   key: CONFIGURATION_DB_CONNECTION
             - name: ConnectionStrings__PersistedGrantDb
               valueFrom:
                 secretKeyRef:
-                  name: identity-service-secret
+                  name: identity-server-secret
                   key: PERSISTED_GRANT_DB_CONNECTION
             - name: ConnectionStrings__Redis
               valueFrom:
                 secretKeyRef:
-                  name: identity-service-secret
+                  name: identity-server-secret
                   key: REDIS_CONNECTION
+            - name: CERT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: CERT_PASSWORD
+            - name: CERT_PATH
+              value: /app/certs/deepin.pfx
             - name: RabbitMQ__Host
               valueFrom:
                 secretKeyRef:
-                  name: identity-service-secret
+                  name: identity-server-secret
                   key: RABBITMQ_HOST
             - name: RabbitMQ__Port
               valueFrom:
                 secretKeyRef:
-                  name: identity-service-secret
+                  name: identity-server-secret
                   key: RABBITMQ_PORT
             - name: RabbitMQ__Username
               valueFrom:
                 secretKeyRef:
-                  name: identity-service-secret
+                  name: identity-server-secret
                   key: RABBITMQ_USERNAME
             - name: RabbitMQ__Password
               valueFrom:
                 secretKeyRef:
-                  name: identity-service-secret
+                  name: identity-server-secret
                   key: RABBITMQ_PASSWORD
             - name: RabbitMQ__VirtualHost
               valueFrom:
                 secretKeyRef:
-                  name: identity-service-secret
+                  name: identity-server-secret
                   key: RABBITMQ_VHOST
             - name: RabbitMQ__QueueName
-              value: identity-service
+              value: identity-server
+          volumeMounts:
+            - name: certs
+              mountPath: /app/certs
+              readOnly: true
+      volumes:
+        - name: certs
+          hostPath:
+            path: /home/leoyang/certs
+            type: Directory

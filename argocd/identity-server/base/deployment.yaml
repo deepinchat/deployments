@@ -1,24 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: identity-service
+  name: identity-server
   labels:
-    app: identity-service
+    app: identity-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: identity-service
+      app: identity-server
   template:
     metadata:
       labels:
-        app: identity-service
+        app: identity-server
     spec:
       containers:
-        - name: identity-service
-          image: deepinnext/identity-service:87073d4b658ced2209aadfaf8631f45ec508fdd3
+        - name: identity-server
+          image: deepinnext/identity-server:87073d4b658ced2209aadfaf8631f45ec508fdd3
           ports:
-            - containerPort: 5000
+            - containerPort: 8080
+            - containerPort: 8081
           resources:
             requests:
               memory: "256Mi"
@@ -29,12 +30,12 @@ spec:
           readinessProbe:
             httpGet:
               path: /health
-              port: 5000
+              port: 8080
             initialDelaySeconds: 5
             periodSeconds: 5
           livenessProbe:
             httpGet:
               path: /health
-              port: 5000
+              port: 8080
             initialDelaySeconds: 5
             periodSeconds: 5

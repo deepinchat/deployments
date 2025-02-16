@@ -6,8 +6,8 @@ spec:
   selector:
     app: identity-service
   ports:
-    - name: https
+    - name: http
       protocol: TCP
-      port: 5000
-      targetPort: 8081
+      port: 5006
+      targetPort: 5000
   type: LoadBalancer
