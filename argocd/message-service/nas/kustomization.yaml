@@ -7,7 +7,7 @@ patchesStrategicMerge:
   - deployment.yaml
 images:
   - name: deepinnext/message-service
-    newTag: 6e1178782159228bf80924391c118488b0bcee0b
+    newTag: 63f024fcf8b0fc97ca143ea85bd3727f37029793
 patches:
   - path: patch-ingress.yaml
     target:
