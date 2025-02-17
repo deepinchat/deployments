@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: web-bff-service
-          image: deepinnext/web-bff-service:a2925eff7943f7b161934b37a88c97f9cc1e124c
+          image: deepinnext/web-bff-service:77a9517cdbcd7cd91b82ed829a378b7baf337c2d
           ports:
             - containerPort: 5000
           resources:
