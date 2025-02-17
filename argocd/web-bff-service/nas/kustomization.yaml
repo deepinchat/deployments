@@ -1,0 +1,15 @@
+namePrefix: nas-
+commonLabels:
+  variant: nas
+bases:
+  - ./../base
+patchesStrategicMerge:
+  - deployment.yaml
+images:
+  - name: deepinnext/web-bff-service
+    newTag: a2925eff7943f7b161934b37a88c97f9cc1e124c
+patches:
+  - path: patch-ingress.yaml
+    target:
+      kind: Ingress
+      name: web-bff-service

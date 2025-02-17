@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-bff-service
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: web-bff-service
+          env:
+            - name: DEEPIN_ENV
+              value: nas
+            - name: ConnectionStrings__RedisConnection
+              valueFrom:
+                secretKeyRef:
+                  name: web-bff-service-secret
+                  key: REDIS_CONNECTION
+            - name: Identity__Url
+              value: https://account.deepin.me

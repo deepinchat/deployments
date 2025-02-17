@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-bff-service
+  labels:
+    app: web-bff-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-bff-service
+  template:
+    metadata:
+      labels:
+        app: web-bff-service
+    spec:
+      containers:
+        - name: web-bff-service
+          image: deepinnext/web-bff-service:a2925eff7943f7b161934b37a88c97f9cc1e124c
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 5
