@@ -8,7 +8,9 @@ spec:
     spec:
       containers:
         - name: identity-service
-          env:
+          env:            
+            - name: PathBase
+              value: /identity
             - name: DEEPIN_ENV
               value: nas
             - name: ConnectionStrings__IdentityDb
