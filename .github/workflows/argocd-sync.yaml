@@ -6,6 +6,8 @@ on:
       - master
     paths:
       - "argocd/**"
+  workflow_dispatch:
+
 jobs:
   create_or_update_argocd:
     runs-on: home-ubuntu
