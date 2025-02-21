@@ -12,7 +12,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: chat-service
+              name: identity-service
               port:
                 number: 5006
     - host: "<<PLACEHOLDER>>"
