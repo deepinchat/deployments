@@ -8,8 +8,3 @@ patchesStrategicMerge:
 images:
   - name: deepinnext/storage-service
     newTag: 76a0392388957eb4f8bae1e63ee1595dd7ef436b
-patches:
-  - path: patch-ingress.yaml
-    target:
-      kind: Ingress
-      name: storage-service

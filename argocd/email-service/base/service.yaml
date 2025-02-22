@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: email-service
 spec:
+  type: ClusterIP
   selector:
     app: email-service
   ports:
     - protocol: TCP
-      port: 5001
+      port: 80
       targetPort: 5000
-  type: LoadBalancer

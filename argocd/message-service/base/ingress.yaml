@@ -14,14 +14,4 @@ spec:
             service:
               name: message-service
               port:
-                number: 5003
-    - host: "<<PLACEHOLDER>>"
-      http:
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: message-service
-              port:
-                number: 5003
+                number: 80

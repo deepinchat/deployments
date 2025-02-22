@@ -3,11 +3,12 @@ kind: Service
 metadata:
   name: identity-server
 spec:
+  type: NodePort
   selector:
     app: identity-server
   ports:
     - name: https
       protocol: TCP
-      port: 5000
+      port: 443
       targetPort: 8081
-  type: LoadBalancer
+      nodePort: 30443

@@ -8,8 +8,3 @@ patchesStrategicMerge:
 images:
   - name: deepinnext/identity-server
     newTag: d4d5502f2a6d2e80532530d055d49c0804d80255
-patches:
-  - path: patch-ingress.yaml
-    target:
-      kind: Ingress
-      name: identity-server

@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: identity-service
 spec:
+  type: ClusterIP
   selector:
     app: identity-service
   ports:
     - name: http
       protocol: TCP
-      port: 5006
+      port: 80
       targetPort: 5000
-  type: LoadBalancer

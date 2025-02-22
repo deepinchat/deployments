@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: presence-service
 spec:
+  type: ClusterIP
   selector:
     app: presence-service
   ports:
     - protocol: TCP
-      port: 5005
+      port: 80
       targetPort: 5000
-  type: LoadBalancer

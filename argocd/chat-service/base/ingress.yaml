@@ -14,14 +14,4 @@ spec:
             service:
               name: chat-service
               port:
-                number: 5002
-    - host: "<<PLACEHOLDER>>"
-      http:
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: chat-service
-              port:
-                number: 5002
+                number: 80

@@ -14,14 +14,4 @@ spec:
             service:
               name: storage-service
               port:
-                number: 5004
-    - host: "<<PLACEHOLDER>>"
-      http:
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: storage-service
-              port:
-                number: 5004
+                number: 80

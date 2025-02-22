@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: web-bff-service
 spec:
+  type: ClusterIP
   selector:
     app: web-bff-service
   ports:
     - protocol: TCP
-      port: 5007
+      port: 80
       targetPort: 5000
-  type: LoadBalancer

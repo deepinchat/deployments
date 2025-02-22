@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: message-service
 spec:
+  type: ClusterIP
   selector:
     app: message-service
   ports:
     - protocol: TCP
-      port: 5003
+      port: 80
       targetPort: 5000
-  type: LoadBalancer

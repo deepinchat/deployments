@@ -8,8 +8,3 @@ patchesStrategicMerge:
 images:
   - name: deepinnext/email-service
     newTag: e2cc98022838df8e58e686765890fae072dadd60
-patches:
-  - path: patch-ingress.yaml
-    target:
-      kind: Ingress
-      name: email-service

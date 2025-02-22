@@ -1,3 +1,0 @@
-- op: replace
-  path: /spec/rules/1/host
-  value: web-bff-api.internal.local
