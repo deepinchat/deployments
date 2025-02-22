@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: identity-server
-          image: deepinnext/identity-server:97f908bb49bfc576d1b1a80fe6a3f15067ff37fb
+          image: deepinnext/identity-server:d4d5502f2a6d2e80532530d055d49c0804d80255
           ports:
             - containerPort: 8080
             - containerPort: 8081
