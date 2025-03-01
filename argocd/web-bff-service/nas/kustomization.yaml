@@ -6,4 +6,4 @@ patchesStrategicMerge:
   - deployment.yaml
 images:
   - name: deepinnext/web-bff-service
-    newTag: d454c16ee3a8c9fd5cba7763532100bf7c67af47
+    newTag: 8bab60ae9da2b0a0e60ce84eeeb974e5a70221fe
