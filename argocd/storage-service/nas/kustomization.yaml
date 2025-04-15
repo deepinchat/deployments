@@ -6,4 +6,4 @@ patchesStrategicMerge:
   - deployment.yaml
 images:
   - name: deepinnext/storage-service
-    newTag: 76a0392388957eb4f8bae1e63ee1595dd7ef436b
+    newTag: cdbe180e0a8482ec9559e6938bfbfc685ec7d86a

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: storage-service
-          image: deepinnext/storage-service:76a0392388957eb4f8bae1e63ee1595dd7ef436b
+          image: deepinnext/storage-service:cdbe180e0a8482ec9559e6938bfbfc685ec7d86a
           ports:
             - containerPort: 5000
           resources:
