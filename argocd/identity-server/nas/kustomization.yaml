@@ -6,4 +6,4 @@ patchesStrategicMerge:
   - deployment.yaml
 images:
   - name: deepinchat/identity-server
-    newTag: 509aebbc7ce53a93d19a1f1711d2a514b3b136bf
+    newTag: 3ea468f426d771d85860185fd8540f4f255cbd60
