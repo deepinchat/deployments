@@ -25,7 +25,7 @@ spec:
                 secretKeyRef:
                   name: identity-server-secret
                   key: IDSV_DB_CONNECTION
-            - name: Redis__ConnectionStrings
+            - name: Redis__ConnectionString
               valueFrom:
                 secretKeyRef:
                   name: identity-server-secret

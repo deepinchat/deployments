@@ -43,7 +43,7 @@ spec:
                 secretKeyRef:
                   name: monolith-service-secret
                   key: IDENTITY_DB_CONNECTION
-            - name: Redis__ConnectionStrings
+            - name: Redis__ConnectionString
               valueFrom:
                 secretKeyRef:
                   name: monolith-service-secret
