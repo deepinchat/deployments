@@ -6,4 +6,4 @@ patchesStrategicMerge:
   - deployment.yaml
 images:
   - name: deepinchat/monolith-service
-    newTag: 3ea468f426d771d85860185fd8540f4f255cbd60
+    newTag: 91e2caae3098adc43672c98a46787c2cf99b0b74
