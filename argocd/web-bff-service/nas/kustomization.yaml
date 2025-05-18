@@ -1,9 +1,0 @@
-commonLabels:
-  variant: nas
-bases:
-  - ./../base
-patchesStrategicMerge:
-  - deployment.yaml
-images:
-  - name: deepinnext/web-bff-service
-    newTag: 85a1034038a0f0fc249f6a9d737b88ad1d6b55c2

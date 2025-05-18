@@ -1,9 +1,0 @@
-commonLabels:
-  variant: nas
-bases:
-  - ./../base
-patchesStrategicMerge:
-  - deployment.yaml
-images:
-  - name: deepinnext/presence-service
-    newTag: 377e59b2930e0d8486f778c8bf9099c3e8941295

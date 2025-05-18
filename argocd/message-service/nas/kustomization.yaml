@@ -1,9 +1,0 @@
-commonLabels:
-  variant: nas
-bases:
-  - ./../base
-patchesStrategicMerge:
-  - deployment.yaml
-images:
-  - name: deepinnext/message-service
-    newTag: cc4b7f45f0a20358215a965360e011b9d6f0713b

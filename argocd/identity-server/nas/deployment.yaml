@@ -3,36 +3,29 @@ kind: Deployment
 metadata:
   name: identity-server
 spec:
-  replicas: 2
+  replicas: 3
   template:
     spec:
       containers:
         - name: identity-server
           env:
-            - name: ASPNETCORE_URLS
-              value: "http://*:8080;https://+:8081"
             - name: ASPNETCORE_Kestrel__Certificates__Default__Path
               value: "/app/certs/origin-cert-cf.pem"
             - name: ASPNETCORE_Kestrel__Certificates__Default__KeyPath
               value: "/app/certs/private-key-cf.pem"
             - name: DEEPIN_ENV
-              value: nas
-            - name: ConnectionStrings__IdentityDb
+              value: staging
+            - name: ConnectionStrings__Identity
               valueFrom:
                 secretKeyRef:
                   name: identity-server-secret
                   key: IDENTITY_DB_CONNECTION
-            - name: ConnectionStrings__ConfigurationDb
+            - name: ConnectionStrings__IdentityServer
               valueFrom:
                 secretKeyRef:
                   name: identity-server-secret
-                  key: CONFIGURATION_DB_CONNECTION
-            - name: ConnectionStrings__PersistedGrantDb
-              valueFrom:
-                secretKeyRef:
-                  name: identity-server-secret
-                  key: PERSISTED_GRANT_DB_CONNECTION
-            - name: ConnectionStrings__Redis
+                  key: IDSV_DB_CONNECTION
+            - name: Redis__ConnectionStrings
               valueFrom:
                 secretKeyRef:
                   name: identity-server-secret

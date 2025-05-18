@@ -1,9 +1,0 @@
-commonLabels:
-  variant: nas
-bases:
-  - ./../base
-patchesStrategicMerge:
-  - deployment.yaml
-images:
-  - name: deepinnext/identity-service
-    newTag: fd9c93bda1af5792b30329c65a9a382df6f7de30

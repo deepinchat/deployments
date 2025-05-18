@@ -1,9 +1,0 @@
-commonLabels:
-  variant: nas
-bases:
-  - ./../base
-patchesStrategicMerge:
-  - deployment.yaml
-images:
-  - name: deepinnext/storage-service
-    newTag: 566ece68832fb22277e2cef8cb21c77b0acb184d
