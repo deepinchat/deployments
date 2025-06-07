@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: identity-server
-          image: deepinchat/identity-server:b19a1a11e635a8435749d3c8ef8a5f4ced04c92e
+          image: deepinchat/identity-server:5b703a1e41ad06e2320413687b62dbe88155d855
           ports:
             - containerPort: 8080
             - containerPort: 8081
