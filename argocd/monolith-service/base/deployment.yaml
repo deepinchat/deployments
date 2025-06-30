@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: monolith-service
-          image: deepinchat/monolith-service:91e2caae3098adc43672c98a46787c2cf99b0b74
+          image: deepinchat/monolith-service:79847c8a39b20b0d1492aa23b6d06776106e03c5
           ports:
             - containerPort: 8080
           resources:
