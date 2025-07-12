@@ -108,11 +108,6 @@ jobs:
           curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
           sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
 
-      - name: Install kubectl
-        run: |
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-
       - name: Authenticate with ArgoCD
         run: |
           # Assuming the ArgoCD server is accessible via API server and kubectl is already configured
@@ -152,20 +147,37 @@ jobs:
                 argocd app sync "$APP_NAME" --timeout 300
                 echo "Sync completed for $APP_NAME"
               else
-                echo "Application $APP_NAME does not exist, creating from application.yaml..."
+                echo "Application $APP_NAME does not exist, creating using ArgoCD CLI..."
+
+                REPO_URL=$(grep "repoURL:" "$APPLICATION_FILE" | awk '{print $2}')
+                PATH_VALUE=$(grep "path:" "$APPLICATION_FILE" | awk '{print $2}')
+                DEST_NAMESPACE=$(grep "namespace:" "$APPLICATION_FILE" | tail -1 | awk '{print $2}')
+                TARGET_REVISION=$(grep "targetRevision:" "$APPLICATION_FILE" | awk '{print $2}')
                 
-                kubectl apply -f "$APPLICATION_FILE"
+                echo "Extracted values:"
+                echo "  Repo URL: $REPO_URL"
+                echo "  Path: $PATH_VALUE"  
+                echo "  Namespace: $DEST_NAMESPACE"
+                echo "  Target Revision: $TARGET_REVISION"
                 
-                echo "Application $APP_NAME created successfully"
-                echo "Waiting for application to be ready..."
-                sleep 10
+                argocd app create "$APP_NAME" \
+                  --repo "$REPO_URL" \
+                  --path "$PATH_VALUE" \
+                  --dest-server https://kubernetes.default.svc \
+                  --dest-namespace "$DEST_NAMESPACE" \
+                  --revision "$TARGET_REVISION" \
+                  --sync-policy automated \
+                  --auto-prune \
+                  --self-heal
                 
-                if argocd app get "$APP_NAME" >/dev/null 2>&1; then
+                if [ $? -eq 0 ]; then
+                  echo "Application $APP_NAME created successfully"
                   echo "Syncing newly created application $APP_NAME..."
                   argocd app sync "$APP_NAME" --timeout 300
                   echo "Initial sync completed for $APP_NAME"
                 else
-                  echo "Warning: Application $APP_NAME was created but not found in ArgoCD"
+                  echo "Error: Failed to create application $APP_NAME"
+                  exit 1
                 fi
               fi
               

@@ -13,7 +13,6 @@ spec:
     repoURL: https://github.com/deepinchat/deployments.git
     targetRevision: HEAD
     path: argocd/redis/az-sg
-    branch: develop
   destination:
     server: https://kubernetes.default.svc
     namespace: default
