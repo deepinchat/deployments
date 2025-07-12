@@ -13,7 +13,7 @@ spec:
           service:
             name: identity-server
             port:
-              number: 8081
+              number: 443
   tls:
     - hosts:
       - account.deepin.app
