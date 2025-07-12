@@ -46,8 +46,6 @@ spec:
         volumeMounts:
         - name: rabbitmq-data
           mountPath: /var/lib/rabbitmq
-        - name: rabbitmq-config
-          mountPath: /etc/rabbitmq
         resources:
           requests:
             memory: "256Mi"
@@ -95,70 +93,3 @@ spec:
   resources:
     requests:
       storage: 5Gi
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: rabbitmq-config
-  labels:
-    app: rabbitmq
-    app.kubernetes.io/name: rabbitmq
-    app.kubernetes.io/component: message-broker
-data:
-  rabbitmq.conf: |
-    # RabbitMQ Configuration
-    listeners.tcp.default = 5672
-    management.tcp.port = 15672
-    
-    # Logging
-    log.console = true
-    log.console.level = info
-    log.file.level = info
-    # Enable management plugin
-    management.listener.port = 15672
-    management.listener.ip   = 0.0.0.0
-    
-    # Memory and disk settings
-    vm_memory_high_watermark.relative = 0.6
-    disk_free_limit.relative = 2.0
-    
-    # Clustering (single node for now)
-    cluster_formation.peer_discovery_backend = classic_config
-    
-    # Management plugin
-    management.load_definitions = /etc/rabbitmq/definitions.json
-    
-    # Default vhost and user permissions
-    default_vhost = /
-    default_user = guest
-    default_pass = guest
-    default_user_tags.administrator = true
-    default_permissions.configure = .*
-    default_permissions.read = .*
-    default_permissions.write = .*
-  
-  definitions.json: |
-    {
-      "vhosts": [
-        {"name": "/"}
-      ],
-      "users": [
-        {
-          "name": "admin",
-          "password_hash": "hashed_password_here",
-          "tags": "administrator"
-        }
-      ],
-      "permissions": [
-        {
-          "user": "admin",
-          "vhost": "/",
-          "configure": ".*",
-          "write": ".*",
-          "read": ".*"
-        }
-      ],
-      "exchanges": [],
-      "queues": [],
-      "bindings": []
-    }
