@@ -74,22 +74,7 @@ spec:
       volumes:
       - name: rabbitmq-data
         persistentVolumeClaim:
-          claimName: rabbitmq-pvc
+          claimName: rabbitmq-pvc-1
       - name: rabbitmq-config
         configMap:
           name: rabbitmq-config
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: rabbitmq-pvc
-  labels:
-    app: rabbitmq
-    app.kubernetes.io/name: rabbitmq
-    app.kubernetes.io/component: message-broker
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi

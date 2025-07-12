@@ -8,6 +8,7 @@ resources:
   - deployment.yaml
   - service.yaml
   - network-policy.yaml
+  - pvc.yaml
   # - monitoring.yaml  # Uncomment if you have Prometheus operator
 
 commonLabels:

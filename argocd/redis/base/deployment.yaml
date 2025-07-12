@@ -82,17 +82,6 @@ spec:
           name: redis-config
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: redis-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-config
