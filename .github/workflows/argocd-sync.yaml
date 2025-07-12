@@ -4,60 +4,177 @@ on:
   push:
     branches:
       - master
+      - develop
     paths:
       - "argocd/**"
   workflow_dispatch:
 
 jobs:
-  create_or_update_argocd:
-    runs-on: home-ubuntu
+  # deploy_to_nas:
+  #   runs-on: home-ubuntu
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     # - name: Install ArgoCD CLI
+  #     #   run: |
+  #     #     curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+  #     #     sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+
+  #     - name: Install kubectl (if not available)
+  #       run: |
+  #         if ! command -v kubectl &> /dev/null; then
+  #           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  #           sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+  #         fi
+
+  #     - name: Authenticate with ArgoCD
+  #       run: |
+  #         # Assuming the ArgoCD server is accessible via API server and kubectl is already configured
+  #         argocd login ${{ secrets.ARGOCD_SERVER_INTERNAL }} \
+  #         --username ${{ secrets.ARGOCD_USERNAME }} \
+  #         --password ${{ secrets.ARGOCD_PASSWORD }} \
+  #         --insecure
+
+  #     - name: Deploy services
+  #       run: |
+  #         echo "Scanning for services with application.yaml files in nas environment..."
+          
+  #         for SERVICE_DIR in argocd/*/; do
+  #           if [[ ! -d "$SERVICE_DIR" ]]; then
+  #             continue
+  #           fi
+            
+  #           SERVICE=$(basename "$SERVICE_DIR")
+  #           echo "Processing service: $SERVICE"
+            
+  #           # 只检查 nas 环境
+  #           NAS_DIR="$SERVICE_DIR/nas"
+  #           APPLICATION_FILE="$NAS_DIR/application.yaml"
+            
+  #           if [[ -f "$APPLICATION_FILE" ]]; then
+  #             echo "Found application.yaml for $SERVICE in nas environment"
+              
+  #             # 从 application.yaml 文件中提取应用名称
+  #             APP_NAME=$(grep "name:" "$APPLICATION_FILE" | head -1 | awk '{print $2}' | tr -d '"')
+              
+  #             if [[ -z "$APP_NAME" ]]; then
+  #               echo "Warning: Could not extract app name from $APPLICATION_FILE, using fallback naming"
+  #               APP_NAME="$SERVICE-nas"
+  #             fi
+              
+  #             echo "Processing application: $APP_NAME"
+              
+  #             if argocd app get "$APP_NAME" >/dev/null 2>&1; then
+  #               echo "Application $APP_NAME already exists, syncing..."
+  #               argocd app sync "$APP_NAME" --timeout 300
+  #               echo "Sync completed for $APP_NAME"
+  #             else
+  #               echo "Application $APP_NAME does not exist, creating from application.yaml..."
+                
+  #               kubectl apply -f "$APPLICATION_FILE"
+                
+  #               echo "Application $APP_NAME created successfully"
+  #               echo "Waiting for application to be ready..."
+  #               sleep 10
+                
+  #               if argocd app get "$APP_NAME" >/dev/null 2>&1; then
+  #                 echo "Syncing newly created application $APP_NAME..."
+  #                 argocd app sync "$APP_NAME" --timeout 300
+  #                 echo "Initial sync completed for $APP_NAME"
+  #               else
+  #                 echo "Warning: Application $APP_NAME was created but not found in ArgoCD"
+  #               fi
+  #             fi
+              
+  #             echo "Checking sync status for $APP_NAME..."
+  #             argocd app wait "$APP_NAME" --timeout 300 --health || echo "Warning: $APP_NAME did not reach healthy state within timeout"
+              
+  #           else
+  #             echo "No application.yaml found for $SERVICE in nas environment, skipping..."
+  #           fi
+  #         done
+          
+  #         echo "NAS deployment process completed!"
+
+  deploy_to_az_singapore:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # - name: Install ArgoCD CLI
-      #   run: |
-      #     curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-      #     sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+      - name: Install ArgoCD CLI
+        run: |
+          curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
       - name: Authenticate with ArgoCD
         run: |
           # Assuming the ArgoCD server is accessible via API server and kubectl is already configured
-          argocd login ${{ secrets.ARGOCD_SERVER_INTERNAL }} \
-          --username ${{ secrets.ARGOCD_USERNAME }} \
-          --password ${{ secrets.ARGOCD_PASSWORD }} \
-          --insecure
+          argocd login ${{ secrets.AZ_SG_ARGOCD_SERVER_URL }} \
+          --username ${{ secrets.AZ_SG_ARGOCD_USERNAME }} \
+          --password ${{ secrets.AZ_SG_ARGOCD_PASSWORD }}
 
       - name: Deploy services
         run: |
+          echo "Scanning for services with application.yaml files in az-sg region..."
+          
           for SERVICE_DIR in argocd/*/; do
-          SERVICE=$(basename "$SERVICE_DIR")
-          SERVICE_REPO="${{ github.server_url }}/${{ github.repository_owner }}/$SERVICE.git"
-          echo "Processing service: $SERVICE in repo: $SERVICE_REPO"
-
-          # for ENV in prod nas; do
-          for ENV in nas; do
-            if [[ -d "$SERVICE_DIR/$ENV" ]]; then
-              APP_NAME="$SERVICE-$ENV"
-              echo "Ensuring $APP_NAME app exists for $ENV environment"
-              if ! argocd app get "$APP_NAME" >/dev/null 2>&1; then
-                ls
-                echo "Creating $APP_NAME application..."
-                argocd app create "$APP_NAME" \
-                  --repo ${{ github.server_url }}/${{ github.repository }} \
-                  --path "argocd/$SERVICE/$ENV" \
-                  --dest-server https://kubernetes.default.svc \
-                  --dest-namespace $ENV \
-                  --sync-policy automated \
-                  --auto-prune \
-                  --self-heal
-                  
-                echo "$APP_NAME application created successfully"
-                echo "Syncing $APP_NAME application..."
-                argocd app sync "$APP_NAME"
-              else
-                echo "$APP_NAME application already exists"
+            if [[ ! -d "$SERVICE_DIR" ]]; then
+              continue
+            fi
+            
+            SERVICE=$(basename "$SERVICE_DIR")
+            echo "Processing service: $SERVICE"
+            
+            AZ_SG_DIR="$SERVICE_DIR/az-sg"
+            APPLICATION_FILE="$AZ_SG_DIR/application.yaml"
+            
+            if [[ -f "$APPLICATION_FILE" ]]; then
+              echo "Found application.yaml for $SERVICE in az-sg environment"
+              
+              APP_NAME=$(grep "name:" "$APPLICATION_FILE" | head -1 | awk '{print $2}' | tr -d '"')
+              
+              if [[ -z "$APP_NAME" ]]; then
+                echo "Warning: Could not extract app name from $APPLICATION_FILE, using fallback naming"
+                APP_NAME="$SERVICE-az-sg"
               fi
+              
+              echo "Processing application: $APP_NAME"
+              
+              if argocd app get "$APP_NAME" >/dev/null 2>&1; then
+                echo "Application $APP_NAME already exists, syncing..."
+                argocd app sync "$APP_NAME" --timeout 300
+                echo "Sync completed for $APP_NAME"
+              else
+                echo "Application $APP_NAME does not exist, creating from application.yaml..."
+                
+                kubectl apply -f "$APPLICATION_FILE"
+                
+                echo "Application $APP_NAME created successfully"
+                echo "Waiting for application to be ready..."
+                sleep 10
+                
+                if argocd app get "$APP_NAME" >/dev/null 2>&1; then
+                  echo "Syncing newly created application $APP_NAME..."
+                  argocd app sync "$APP_NAME" --timeout 300
+                  echo "Initial sync completed for $APP_NAME"
+                else
+                  echo "Warning: Application $APP_NAME was created but not found in ArgoCD"
+                fi
+              fi
+              
+              echo "Checking sync status for $APP_NAME..."
+              argocd app wait "$APP_NAME" --timeout 300 --health || echo "Warning: $APP_NAME did not reach healthy state within timeout"
+              
+            else
+              echo "No application.yaml found for $SERVICE in az-sg environment, skipping..."
             fi
           done
-          done
+          
+          echo "AZ Singapore deployment process completed!"
