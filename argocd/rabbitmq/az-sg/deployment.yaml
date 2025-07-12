@@ -17,16 +17,16 @@ spec:
         env:
         - name: RABBITMQ_DEFAULT_USER
           valueFrom:
-            configMapKeyRef:
-              name: rabbitmq-config
+            secretKeyRef:
+              name: rabbitmq-secret
               key: username
         - name: RABBITMQ_DEFAULT_PASS
           valueFrom:
-            configMapKeyRef:
-              name: rabbitmq-config
+            secretKeyRef:
+              name: rabbitmq-secret
               key: password
         - name: RABBITMQ_ERLANG_COOKIE
           valueFrom:
-            configMapKeyRef:
-              name: rabbitmq-config
+            secretKeyRef:
+              name: rabbitmq-secret
               key: erlang-cookie
