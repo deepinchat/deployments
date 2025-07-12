@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: redis-az-sg
+  name: redis
   namespace: argocd
   labels:
     app.kubernetes.io/name: redis
@@ -15,7 +15,7 @@ spec:
     path: argocd/redis/az-sg
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: az-sg
   syncPolicy:
     automated:
       prune: true
@@ -32,3 +32,6 @@ spec:
         factor: 2
         maxDuration: 3m
   revisionHistoryLimit: 10
+
+# az-sg.redis:6379
+# redis.az-sg.svc.cluster.local:6379
