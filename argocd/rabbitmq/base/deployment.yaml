@@ -1,0 +1,190 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+  labels:
+    app: rabbitmq
+    app.kubernetes.io/name: rabbitmq
+    app.kubernetes.io/component: message-broker
+    app.kubernetes.io/part-of: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+      app.kubernetes.io/name: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+        app.kubernetes.io/name: rabbitmq
+        app.kubernetes.io/component: message-broker
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+        fsGroup: 999
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:3.12-management-alpine
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          runAsUser: 999
+          capabilities:
+            drop:
+            - ALL
+        ports:
+        - containerPort: 5672
+          name: amqp
+          protocol: TCP
+        - containerPort: 15672
+          name: management
+          protocol: TCP
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          valueFrom:
+            configMapKeyRef:
+              name: rabbitmq-auth-config
+              key: username
+        - name: RABBITMQ_DEFAULT_PASS
+          valueFrom:
+            configMapKeyRef:
+              name: rabbitmq-auth-config
+              key: password
+        - name: RABBITMQ_ERLANG_COOKIE
+          valueFrom:
+            configMapKeyRef:
+              name: rabbitmq-auth-config
+              key: erlang-cookie
+        volumeMounts:
+        - name: rabbitmq-data
+          mountPath: /var/lib/rabbitmq
+        - name: rabbitmq-config
+          mountPath: /etc/rabbitmq
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          exec:
+            command:
+            - rabbitmq-diagnostics
+            - status
+          initialDelaySeconds: 60
+          timeoutSeconds: 30
+          periodSeconds: 60
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - rabbitmq-diagnostics
+            - ping
+          initialDelaySeconds: 20
+          timeoutSeconds: 30
+          periodSeconds: 60
+          failureThreshold: 3
+      volumes:
+      - name: rabbitmq-data
+        persistentVolumeClaim:
+          claimName: rabbitmq-pvc
+      - name: rabbitmq-config
+        configMap:
+          name: rabbitmq-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rabbitmq-pvc
+  labels:
+    app: rabbitmq
+    app.kubernetes.io/name: rabbitmq
+    app.kubernetes.io/component: message-broker
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rabbitmq-config
+  labels:
+    app: rabbitmq
+    app.kubernetes.io/name: rabbitmq
+    app.kubernetes.io/component: message-broker
+data:
+  rabbitmq.conf: |
+    # RabbitMQ Configuration
+    listeners.tcp.default = 5672
+    management.tcp.port = 15672
+    
+    # Logging
+    log.console = true
+    log.console.level = info
+    log.file.level = info
+    
+    # Memory and disk settings
+    vm_memory_high_watermark.relative = 0.6
+    disk_free_limit.relative = 2.0
+    
+    # Clustering (single node for now)
+    cluster_formation.peer_discovery_backend = classic_config
+    
+    # Management plugin
+    management.load_definitions = /etc/rabbitmq/definitions.json
+    
+    # Default vhost and user permissions
+    default_vhost = /
+    default_user = guest
+    default_pass = guest
+    default_user_tags.administrator = true
+    default_permissions.configure = .*
+    default_permissions.read = .*
+    default_permissions.write = .*
+  
+  definitions.json: |
+    {
+      "vhosts": [
+        {"name": "/"}
+      ],
+      "users": [
+        {
+          "name": "admin",
+          "password_hash": "hashed_password_here",
+          "tags": "administrator"
+        }
+      ],
+      "permissions": [
+        {
+          "user": "admin",
+          "vhost": "/",
+          "configure": ".*",
+          "write": ".*",
+          "read": ".*"
+        }
+      ],
+      "exchanges": [],
+      "queues": [],
+      "bindings": []
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rabbitmq-auth-config
+  labels:
+    app: rabbitmq
+    app.kubernetes.io/name: rabbitmq
+    app.kubernetes.io/component: message-broker
+data:
+  username: "admin"
+  password: "admin123"
+  erlang-cookie: "rabbitmq-cookie"

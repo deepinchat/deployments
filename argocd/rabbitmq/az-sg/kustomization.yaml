@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: az-sg
+
+resources:
+  - ../base
+  - configmap.yaml
+
+
+patchesStrategicMerge:
+  - deployment.yaml
+  - patch-ingress.yaml
+
+commonLabels:
+  environment: az-sg
