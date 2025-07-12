@@ -12,8 +12,8 @@ spec:
         backend:
           service:
             name: identity-server
-            port: 443
-            targetPort: 8081
+            port:
+              number: 8081
   tls:
     - hosts:
       - account.deepin.app
