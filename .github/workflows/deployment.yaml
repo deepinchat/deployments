@@ -1,4 +1,4 @@
-name: Sync ArgoCD Application
+name: ArgoCD Deployment Workflow
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
       - develop
     paths:
       - "argocd/**"
+      - "./github/workflows/deployment.yaml"
   workflow_dispatch:
 
 jobs:
