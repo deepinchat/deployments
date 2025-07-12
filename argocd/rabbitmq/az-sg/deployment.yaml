@@ -7,13 +7,6 @@ spec:
     spec:
       containers:
       - name: rabbitmq
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "250m"
-          limits:
-            memory: "1024Mi"
-            cpu: "500m"
         env:
         - name: RABBITMQ_DEFAULT_USER
           valueFrom:
@@ -30,3 +23,10 @@ spec:
             secretKeyRef:
               name: rabbitmq-secret
               key: erlang-cookie
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
