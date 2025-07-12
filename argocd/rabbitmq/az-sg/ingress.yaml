@@ -3,10 +3,10 @@ kind: Ingress
 metadata:
   name: rabbitmq-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
 spec:
+  ingressClassName: nginx
   rules:
   - host: rabbitmq-az-sg.deepin.app
     http:
