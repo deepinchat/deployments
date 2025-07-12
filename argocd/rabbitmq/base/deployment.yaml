@@ -114,6 +114,9 @@ data:
     log.console = true
     log.console.level = info
     log.file.level = info
+    # Enable management plugin
+    management.listener.port = 15672
+    management.listener.ip   = 0.0.0.0
     
     # Memory and disk settings
     vm_memory_high_watermark.relative = 0.6
