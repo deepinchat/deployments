@@ -152,20 +152,21 @@ jobs:
                 REPO_URL=$(grep "repoURL:" "$APPLICATION_FILE" | awk '{print $2}')
                 PATH_VALUE=$(grep "path:" "$APPLICATION_FILE" | awk '{print $2}')
                 DEST_NAMESPACE=$(grep "namespace:" "$APPLICATION_FILE" | tail -1 | awk '{print $2}')
-                TARGET_REVISION=$(grep "targetRevision:" "$APPLICATION_FILE" | awk '{print $2}')
+                
+                CURRENT_BRANCH="${{ github.ref_name }}"
                 
                 echo "Extracted values:"
                 echo "  Repo URL: $REPO_URL"
                 echo "  Path: $PATH_VALUE"  
                 echo "  Namespace: $DEST_NAMESPACE"
-                echo "  Target Revision: $TARGET_REVISION"
+                echo "  Current Branch: $CURRENT_BRANCH"
                 
                 argocd app create "$APP_NAME" \
                   --repo "$REPO_URL" \
                   --path "$PATH_VALUE" \
                   --dest-server https://kubernetes.default.svc \
                   --dest-namespace "$DEST_NAMESPACE" \
-                  --revision "$TARGET_REVISION" \
+                  --revision "$CURRENT_BRANCH" \
                   --sync-policy automated \
                   --auto-prune \
                   --self-heal
