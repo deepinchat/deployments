@@ -1,3 +1,16 @@
-- op: replace
-  path: "/spec/rules/1/host"
-  value: "rabbitmsq.az-sg.deepin.app"
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rabbitmq-ingress
+spec:
+  rules:
+  - host: rabbitmq.az-sg.deepin.app
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rabbitmq
+            port:
+              number: 15672

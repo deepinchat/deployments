@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: rabbitmq
 spec:
-  replicas: 1
   template:
     spec:
       containers:
@@ -31,14 +30,3 @@ spec:
             configMapKeyRef:
               name: rabbitmq-config
               key: erlang-cookie
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: rabbitmq-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi

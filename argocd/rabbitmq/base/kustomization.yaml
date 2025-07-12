@@ -9,8 +9,9 @@ resources:
   - service.yaml
   - ingress.yaml
 
-commonLabels:
-  app.kubernetes.io/part-of: rabbitmq
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: rabbitmq
 
 images:
 - name: rabbitmq

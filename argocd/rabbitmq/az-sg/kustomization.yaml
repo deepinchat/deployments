@@ -6,10 +6,10 @@ namespace: az-sg
 resources:
   - ../base
 
-
 patchesStrategicMerge:
   - deployment.yaml
   - patch-ingress.yaml
 
-commonLabels:
-  environment: az-sg
+labels:
+  - pairs:
+      environment: az-sg

@@ -14,13 +14,3 @@ spec:
               name: rabbitmq
               port:
                 number: 15672
-    - host: "<<PLACEHOLDER_RABBITMQ_HOST>>"  # Replace with your RabbitMQ host>>"
-      http:
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: rabbitmq
-              port:
-                number: 15672
