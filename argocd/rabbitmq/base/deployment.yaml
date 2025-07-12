@@ -43,22 +43,6 @@ spec:
         - containerPort: 15672
           name: management
           protocol: TCP
-        env:
-        - name: RABBITMQ_DEFAULT_USER
-          valueFrom:
-            configMapKeyRef:
-              name: rabbitmq-auth-config
-              key: username
-        - name: RABBITMQ_DEFAULT_PASS
-          valueFrom:
-            configMapKeyRef:
-              name: rabbitmq-auth-config
-              key: password
-        - name: RABBITMQ_ERLANG_COOKIE
-          valueFrom:
-            configMapKeyRef:
-              name: rabbitmq-auth-config
-              key: erlang-cookie
         volumeMounts:
         - name: rabbitmq-data
           mountPath: /var/lib/rabbitmq
@@ -110,7 +94,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 8Gi
+      storage: 5Gi
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -175,16 +159,3 @@ data:
       "queues": [],
       "bindings": []
     }
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: rabbitmq-auth-config
-  labels:
-    app: rabbitmq
-    app.kubernetes.io/name: rabbitmq
-    app.kubernetes.io/component: message-broker
-data:
-  username: "admin"
-  password: "admin123"
-  erlang-cookie: "rabbitmq-cookie"
