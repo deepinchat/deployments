@@ -136,7 +136,7 @@ jobs:
             APPLICATION_FILE="$AZ_SG_DIR/application.yaml"
             
             if [[ -f "$APPLICATION_FILE" ]]; then
-              echo "Found application.yaml for $SERVICE in az-sg environment"
+              echo "Found application.yaml for $SERVICE in az-sg region"
               
               APP_NAME=$(grep "name:" "$APPLICATION_FILE" | head -1 | awk '{print $2}' | tr -d '"')
               
@@ -173,7 +173,7 @@ jobs:
               argocd app wait "$APP_NAME" --timeout 300 --health || echo "Warning: $APP_NAME did not reach healthy state within timeout"
               
             else
-              echo "No application.yaml found for $SERVICE in az-sg environment, skipping..."
+              echo "No application.yaml found for $SERVICE in az-sg region, skipping..."
             fi
           done
           
