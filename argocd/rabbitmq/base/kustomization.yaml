@@ -16,4 +16,4 @@ labels:
 
 images:
 - name: rabbitmq
-  newTag: 3.12-management-alpine
+  newTag: 4-management-alpine

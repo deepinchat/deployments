@@ -26,7 +26,7 @@ spec:
         fsGroup: 999
       containers:
       - name: rabbitmq
-        image: rabbitmq:3.12-management-alpine
+        image: rabbitmq:4-management-alpine
         imagePullPolicy: IfNotPresent
         env:
         - name: RABBITMQ_DEFAULT_USER
@@ -39,6 +39,11 @@ spec:
             secretKeyRef:
               name: rabbitmq-secret
               key: password
+        - name: RABBITMQ_ERLANG_COOKIE
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secret
+              key: erlang-cookie
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false
