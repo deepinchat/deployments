@@ -18,11 +18,6 @@ spec:
             secretKeyRef:
               name: rabbitmq-secret
               key: password
-        - name: RABBITMQ_ERLANG_COOKIE
-          valueFrom:
-            secretKeyRef:
-              name: rabbitmq-secret
-              key: erlang-cookie
         resources:
           requests:
             memory: "512Mi"
