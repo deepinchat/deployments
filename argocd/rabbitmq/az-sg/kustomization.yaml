@@ -5,7 +5,6 @@ namespace: az-sg
 
 resources:
   - ../base
-  - configmap.yaml
 
 
 patchesStrategicMerge:
