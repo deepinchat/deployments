@@ -3,6 +3,10 @@ kind: Ingress
 metadata:
   name: pgadmin-ingress
 spec:
+  tls:
+    - hosts:
+        - pgadmin-az-sg.deepin.app
+      secretName: deepin-app-tls
   rules:
   - host: pgadmin-az-sg.deepin.app
     http:
