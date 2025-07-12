@@ -20,6 +20,13 @@ spec:
         app.kubernetes.io/name: rabbitmq
         app.kubernetes.io/component: message-broker
     spec:
+      initContainers:
+      - name: fix-perms
+        image: busybox
+        command: ["sh", "-c", "chown -R 999:999 /var/lib/rabbitmq"]
+        volumeMounts:
+        - name: rabbitmq-data
+          mountPath: /var/lib/rabbitmq
       securityContext:
         runAsNonRoot: true
         runAsUser: 999
