@@ -55,7 +55,7 @@ spec:
           name: management
           protocol: TCP
         volumeMounts:
-        - name: rabbitmq-data
+        - name: rabbitmqdata
           mountPath: /var/lib/rabbitmq
         resources:
           requests:
@@ -83,6 +83,6 @@ spec:
           periodSeconds: 60
           failureThreshold: 3
       volumes:
-      - name: rabbitmq-data
+      - name: rabbitmqdata
         persistentVolumeClaim:
           claimName: rabbitmq-pvc
