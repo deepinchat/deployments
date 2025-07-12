@@ -5,7 +5,7 @@ metadata:
   labels:
     app: identity-server
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: identity-server
@@ -23,10 +23,10 @@ spec:
           resources:
             requests:
               memory: "256Mi"
-              cpu: "250m"
+              cpu: "200m"
             limits:
               memory: "512Mi"
-              cpu: "500m"
+              cpu: "400m"
           readinessProbe:
             httpGet:
               path: /health
@@ -39,3 +39,59 @@ spec:
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 5
+          env:
+            - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+              value: "/app/certs/origin-cert-cf.pem"
+            - name: ASPNETCORE_Kestrel__Certificates__Default__KeyPath
+              value: "/app/certs/private-key-cf.pem"
+            - name: DEEPIN_ENV
+              value: production
+            - name: ConnectionStrings__Identity
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: identity_db_connection
+            - name: ConnectionStrings__IdentityServer
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: idsv_db_connection
+            - name: Redis__ConnectionString
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: redis_connection
+            - name: CERT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: cert_password
+            - name: CERT_PATH
+              value: /app/certs/origin-cert-cf.pfx
+            - name: RabbitMQ__Host
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: rabbitmq_host
+            - name: RabbitMQ__Port
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: rabbitmq_port
+            - name: RabbitMQ__Username
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: rabbitmq_username
+            - name: RabbitMQ__Password
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: rabbitmq_password
+            - name: RabbitMQ__VirtualHost
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: rabbitmq_vhost
+            - name: RabbitMQ__QueueName
+              value: identity-server

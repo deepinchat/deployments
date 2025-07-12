@@ -3,12 +3,10 @@ kind: Service
 metadata:
   name: identity-server
 spec:
-  type: NodePort
+  type: ClusterIP
+  ports:
+  - name: https
+    port: 443
+    targetPort: 8081
   selector:
     app: identity-server
-  ports:
-    - name: https
-      protocol: TCP
-      port: 443
-      targetPort: 8081
-      nodePort: 30443

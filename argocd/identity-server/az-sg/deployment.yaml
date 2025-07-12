@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-server
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: identity-server
+          volumeMounts:
+            - name: certs
+              mountPath: /app/certs
+              readOnly: true
+      volumes:
+        - name: certs
+          hostPath:
+            path: /home/leoyang/certs
+            type: Directory

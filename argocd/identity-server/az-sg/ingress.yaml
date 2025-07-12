@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: identity-server
+spec:
+  rules:
+  - host: account.deepin.app
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: identity-server
+            port: 443
+            targetPort: 8081
+  tls:
+    - hosts:
+      - account.deepin.app
+      secretName: deepin-app-tls
+      
