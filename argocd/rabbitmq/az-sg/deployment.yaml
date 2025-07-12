@@ -7,17 +7,6 @@ spec:
     spec:
       containers:
       - name: rabbitmq
-        env:
-        - name: RABBITMQ_DEFAULT_USER
-          valueFrom:
-            secretKeyRef:
-              name: rabbitmq-secret
-              key: username
-        - name: RABBITMQ_DEFAULT_PASS
-          valueFrom:
-            secretKeyRef:
-              name: rabbitmq-secret
-              key: password
         resources:
           requests:
             memory: "512Mi"

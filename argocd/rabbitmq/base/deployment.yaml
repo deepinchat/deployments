@@ -28,6 +28,17 @@ spec:
       - name: rabbitmq
         image: rabbitmq:3.12-management-alpine
         imagePullPolicy: IfNotPresent
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secret
+              key: username
+        - name: RABBITMQ_DEFAULT_PASS
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secret
+              key: password
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false
