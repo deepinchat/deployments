@@ -7,13 +7,11 @@ metadata:
 resources:
   - deployment.yaml
   - service.yaml
-  - network-policy.yaml
   - pvc.yaml
-  # - monitoring.yaml  # Uncomment if you have Prometheus operator
 
 commonLabels:
   app.kubernetes.io/part-of: redis
 
 images:
 - name: redis
-  newTag: 7.2-alpine
+  newTag: 8-alpine
