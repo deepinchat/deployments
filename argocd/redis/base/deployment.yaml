@@ -76,7 +76,7 @@ spec:
       volumes:
       - name: redis-data
         persistentVolumeClaim:
-          claimName: redis-pvc
+          claimName: redis-pvc-1
       - name: redis-config
         configMap:
           name: redis-config
