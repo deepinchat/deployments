@@ -8,7 +8,7 @@ resources:
 
 patchesStrategicMerge:
   - deployment.yaml
-  - patch-ingress.yaml
+  - ingress.yaml
 
 labels:
   - pairs:
