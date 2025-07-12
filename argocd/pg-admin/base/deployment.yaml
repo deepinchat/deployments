@@ -27,6 +27,8 @@ spec:
             secretKeyRef:
               name: pgadmin-secret
               key: password
+        - name: PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION
+          value: "False"
         ports:
         - containerPort: 80
         resources:
