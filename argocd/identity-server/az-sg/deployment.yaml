@@ -15,5 +15,5 @@ spec:
       volumes:
         - name: certs
           hostPath:
-            path: /home/leoyang/certs
+            path: /home/leoyang/certs/deepin.app
             type: Directory
