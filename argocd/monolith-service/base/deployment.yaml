@@ -17,7 +17,7 @@ spec:
       containers:
         - name: monolith-service
           image: deepinchat/monolith-service:489bb829c182c03585f9734e5e0c149182480b75
-          imagePullPolicy: always
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           resources:

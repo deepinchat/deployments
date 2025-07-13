@@ -17,7 +17,7 @@ spec:
       containers:
         - name: identity-server
           image: deepinchat/identity-server:e16b69f4ccc6776064139713b27887071b21062e
-          imagePullPolicy: always
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
             - containerPort: 8081
