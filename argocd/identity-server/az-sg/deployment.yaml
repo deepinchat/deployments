@@ -8,6 +8,13 @@ spec:
     spec:
       containers:
         - name: identity-server
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
           volumeMounts:
             - name: certs
               mountPath: /app/certs
