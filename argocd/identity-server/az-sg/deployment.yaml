@@ -15,6 +15,17 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "400m"
+          env:
+            - name: GitHub__ClientId
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: github_client_id
+            - name: GitHub__ClientSecret
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: github_client_secret
           volumeMounts:
             - name: certs
               mountPath: /app/certs
