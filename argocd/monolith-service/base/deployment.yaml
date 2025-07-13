@@ -5,7 +5,7 @@ metadata:
   labels:
     app: monolith-service
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: monolith-service
@@ -38,3 +38,110 @@ spec:
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 5
+          env:
+            - name: DEEPIN_ENV
+              value: staging
+            - name: Identity__Url
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: identity_url
+            - name: ConnectionStrings__Chat
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: chat_db_connection
+            - name: ConnectionStrings__Contact
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: contact_db_connection
+            - name: ConnectionStrings__Message
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: message_db_connection
+            - name: ConnectionStrings__Storage
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: storage_db_connection
+            - name: ConnectionStrings__Notification
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: notification_db_connection
+            - name: ConnectionStrings__User
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: user_db_connection
+            - name: Redis__ConnectionString
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: redis_connection
+            - name: RabbitMQ__Host
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: rabbitmq_host
+            - name: RabbitMQ__Port
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: rabbitmq_port
+            - name: RabbitMQ__Username
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: rabbitmq_username
+            - name: RabbitMQ__Password
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: rabbitmq_password
+            - name: RabbitMQ__VirtualHost
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: rabbitmq_vhost
+            - name: RabbitMQ__QueueName
+              value: monolith-service
+            - name: Smtp__Host
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: smtp_host
+            - name: Smtp__Port
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: smtp_port
+            - name: Smtp__FromAddress
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: smtp_from_address
+            - name: Smtp__FromDisplayName
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: smtp_from_display_name
+            - name: Smtp__ReplyTo
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: smtp_reply_to
+            - name: Smtp__Password
+              valueFrom:
+                secretKeyRef:
+                  name: monolith-service-secret
+                  key: smtp_password
+            - name: Storage__Provider
+              value: local
+            - name: Storage__FileSystem__RootPath
+              value: /app/data
+          volumeMounts:
+            - name: app-data
+              mountPath: /app/data

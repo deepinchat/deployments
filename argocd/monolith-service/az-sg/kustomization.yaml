@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: az-sg
+resources:
+  - ../base
+patchesStrategicMerge:
+  - deployment.yaml
+images:
+  - name: deepinchat/monolith-service
+    newTag: 489bb829c182c03585f9734e5e0c149182480b75

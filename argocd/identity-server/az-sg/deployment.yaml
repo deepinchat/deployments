@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-server
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: identity-server
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
+          env:
+            - name: GitHub__ClientId
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: github_client_id
+            - name: GitHub__ClientSecret
+              valueFrom:
+                secretKeyRef:
+                  name: identity-server-secret
+                  key: github_client_secret
+          volumeMounts:
+            - name: certs
+              mountPath: /app/certs
+              readOnly: true
+      volumes:
+        - name: certs
+          hostPath:
+            path: /home/leoyang/certs/deepin.app
+            type: Directory

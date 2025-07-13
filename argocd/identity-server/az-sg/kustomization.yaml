@@ -1,9 +1,11 @@
-commonLabels:
-  variant: nas
-bases:
-  - ./../base
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: az-sg
+resources:
+  - ../base
 patchesStrategicMerge:
   - deployment.yaml
+  - ingress.yaml
 images:
   - name: deepinchat/identity-server
     newTag: 74510d5a20ce0da07fbac895b0724a744320ed77
