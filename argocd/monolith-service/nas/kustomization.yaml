@@ -1,9 +1,0 @@
-commonLabels:
-  variant: nas
-bases:
-  - ./../base
-patchesStrategicMerge:
-  - deployment.yaml
-images:
-  - name: deepinchat/monolith-service
-    newTag: 489bb829c182c03585f9734e5e0c149182480b75
