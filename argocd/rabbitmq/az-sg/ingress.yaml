@@ -4,13 +4,17 @@ metadata:
   name: rabbitmq-ingress
 spec:
   rules:
-  - host: rabbitmq-az-sg.deepin.app
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: rabbitmq
-            port:
-              number: 15672
+    - host: rabbitmq-az-sg.deepin.app
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: rabbitmq
+                port:
+                  number: 15672
+  tls:
+    - hosts:
+        - rabbitmq-az-sg.deepin.app
+      secretName: deepin-app-tls

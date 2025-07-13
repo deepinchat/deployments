@@ -4,13 +4,17 @@ metadata:
   name: pgadmin-ingress
 spec:
   rules:
-  - host: pgadmin-az-sg.deepin.app
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: pgadmin
-            port:
-              number: 80
+    - host: pgadmin-az-sg.deepin.app
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: pgadmin
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - pgadmin-az-sg.deepin.app
+      secretName: deepin-app-tls
