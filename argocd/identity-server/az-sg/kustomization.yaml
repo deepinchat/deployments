@@ -8,4 +8,4 @@ patchesStrategicMerge:
   - ingress.yaml
 images:
   - name: deepinchat/identity-server
-    newTag: 74510d5a20ce0da07fbac895b0724a744320ed77
+    newTag: e16b69f4ccc6776064139713b27887071b21062e
